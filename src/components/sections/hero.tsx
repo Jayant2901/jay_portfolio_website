@@ -9,6 +9,7 @@ import { AnchorLink } from "@/components/ui/anchor-link";
 import { personal, socials } from "@/data/resume";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/brand-icons";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { withBasePath } from "@/lib/base-path";
 
 const HeroScene = dynamic(
   () => import("@/components/three/hero-scene").then((mod) => mod.HeroScene),
@@ -83,7 +84,7 @@ export function Hero() {
             <AnchorLink href="#projects">View my work</AnchorLink>
           </Button>
           <Button asChild variant="ghost">
-            <a href={personal.resumeUrl} download>
+            <a href={withBasePath(personal.resumeUrl)} download>
               Resume
               <ArrowDown />
             </a>

@@ -5,11 +5,15 @@ import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provi
 import { Navbar } from "@/components/layout/navbar";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { personal } from "@/data/resume";
+import { withBasePath } from "@/lib/base-path";
 
-const siteUrl = "https://jayantsharma.dev"; // TODO: update once a domain is connected
+// GitHub Pages hosts this at /jay_portfolio_website, so every metadata path
+// below goes through withBasePath — swap this origin once a custom domain
+// (and its own basePath-free deploy) replaces the Pages URL.
+const siteOrigin = "https://jayant2901.github.io";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteOrigin),
   title: `${personal.name} — Data Science / ML / AI`,
   description: personal.tagline,
   keywords: [
@@ -23,21 +27,21 @@ export const metadata: Metadata = {
     "XGBoost",
   ],
   icons: {
-    icon: "/favicon.svg",
+    icon: withBasePath("/favicon.svg"),
   },
   openGraph: {
     title: `${personal.name} — Data Science / ML / AI`,
     description: personal.tagline,
-    url: siteUrl,
+    url: withBasePath("/"),
     siteName: personal.name,
-    images: ["/og-image.svg"],
+    images: [withBasePath("/og-image.svg")],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: `${personal.name} — Data Science / ML / AI`,
     description: personal.tagline,
-    images: ["/og-image.svg"],
+    images: [withBasePath("/og-image.svg")],
   },
 };
 

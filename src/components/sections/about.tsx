@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { about, education, leadership, languages, personal } from "@/data/resume";
+import { withBasePath } from "@/lib/base-path";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -23,7 +24,7 @@ function ProfilePhoto() {
 
   return (
     <Image
-      src={personal.photo}
+      src={withBasePath(personal.photo)}
       alt={personal.name}
       fill
       sizes="280px"
