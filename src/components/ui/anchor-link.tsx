@@ -9,11 +9,12 @@ export const AnchorLink = forwardRef<
   HTMLAnchorElement,
   AnchorHTMLAttributes<HTMLAnchorElement>
 >(({ href, onClick, ...props }, ref) => {
-  const lenis = useLenis();
+  const lenisRef = useLenis();
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     onClick?.(e);
     if (!href) return;
+    const lenis = lenisRef?.current;
 
     if (href === "#") {
       e.preventDefault();

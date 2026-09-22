@@ -4,19 +4,23 @@ import {
   createContext,
   useContext,
   useEffect,
-  useState,
+  useRef,
   type ReactNode,
+  type RefObject,
 } from "react";
 import Lenis from "lenis";
 
-const LenisContext = createContext<Lenis | null>(null);
+const LenisContext = createContext<RefObject<Lenis | null> | null>(null);
 
+// Returns the live ref rather than `.current` so callers always read the
+// latest instance (e.g. inside an event handler), even if Lenis finishes
+// initializing after this component's own last render.
 export function useLenis() {
   return useContext(LenisContext);
 }
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const [lenis, setLenis] = useState<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -29,7 +33,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
-    setLenis(instance);
+    lenisRef.current = instance;
 
     function raf(time: number) {
       instance.raf(time);
@@ -39,11 +43,11 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
 
     return () => {
       instance.destroy();
-      setLenis(null);
+      lenisRef.current = null;
     };
   }, []);
 
   return (
-    <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
+    <LenisContext.Provider value={lenisRef}>{children}</LenisContext.Provider>
   );
 }
