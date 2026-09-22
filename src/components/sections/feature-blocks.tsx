@@ -5,6 +5,8 @@ import { ArrowUpRight, FolderGit2, GraduationCap } from "lucide-react";
 import { AnchorLink } from "@/components/ui/anchor-link";
 import { useTilt, TiltSurface } from "@/components/ui/tilt-card";
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 const blocks = [
   {
     href: "#projects",
@@ -26,10 +28,10 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: index === 0 ? -40 : 40 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: EASE }}
       style={{ transformStyle: "preserve-3d" }}
     >
       <AnchorLink
@@ -37,7 +39,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
         href={block.href}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className="group relative flex h-64 overflow-hidden rounded-[20px] border border-border bg-surface p-8 transition-colors duration-300 hover:border-accent sm:h-80 sm:p-10"
+        className="group relative flex h-64 overflow-hidden rounded-[28px] border border-border bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 sm:h-80 sm:p-10"
       >
         <div
           aria-hidden="true"
@@ -61,7 +63,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
           />
 
           <div>
-            <h3 className="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-none tracking-tight text-fg transition-colors duration-300 group-hover:text-accent">
+            <h3 className="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-none text-fg transition-colors duration-300 group-hover:text-accent">
               {block.title}
             </h3>
             <p className="mt-3 max-w-sm text-muted">{block.description}</p>

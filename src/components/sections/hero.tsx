@@ -15,7 +15,7 @@ const HeroScene = dynamic(
   { ssr: false }
 );
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -49,7 +49,7 @@ export function Hero() {
         style={{ opacity: textOpacity, y: textY }}
         className="pointer-events-none relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-6 sm:px-10"
       >
-        <h1 className="font-display leading-[0.85] tracking-tight text-fg">
+        <h1 className="font-display leading-[0.85] text-fg">
           {["JAYANT", "SHARMA"].map((word, i) => (
             <span key={word} className="block overflow-hidden">
               <motion.span

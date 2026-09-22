@@ -26,9 +26,9 @@ export type Project = {
   slug: string;
   title: string;
   tagline: string;
+  summary: string;
   stat: string;
   statLabel: string;
-  hoverLine: string;
   stack: string[];
   timeframe: string;
   description: string;
@@ -41,10 +41,9 @@ export const projects: Project[] = [
     slug: "ai-risk-manager",
     title: "AI Risk Manager",
     tagline: "Razorpay Internship Buildathon — Track 2",
+    summary: "Scores transactions for fraud risk and explains every decision with SHAP — no black box.",
     stat: "0",
     statLabel: "LLM calls on the decision path",
-    hoverLine:
-      "SHAP explains every score; thresholds are chosen by minimizing fraud cost, not chasing AUC.",
     stack: ["XGBoost", "SHAP", "Entity risk memory", "LLM explainer agent"],
     timeframe: "Built in a 5-day buildathon",
     description:
@@ -60,10 +59,9 @@ export const projects: Project[] = [
     slug: "lazy-rag",
     title: "lazy-rag",
     tagline: "Adaptive Retrieval for RAG — independent research",
+    summary: "Tests whether an LLM's own confidence can tell it when retrieval is actually worth the cost.",
     stat: "13×",
     statLabel: "less retrieval, higher accuracy (p=0.004)",
-    hoverLine:
-      "The same gate reverses across datasets — it works exactly when the model's pretrained knowledge is actually reliable.",
     stack: ["Groq LLM API", "FAISS retrieval", "Bootstrap CI + significance tests"],
     timeframe: "Independent research project",
     description:
@@ -79,10 +77,9 @@ export const projects: Project[] = [
     slug: "life-expectancy-predictor",
     title: "Life Expectancy Predictor",
     tagline: "scikit-learn + Streamlit",
+    summary: "Predicts a country's life expectancy from health, education, and economic indicators.",
     stat: "0.968",
     statLabel: "R² on held-out WHO data",
-    hoverLine:
-      "Random Forest vs. Linear Regression, with feature importance so the prediction explains itself.",
     stack: ["scikit-learn", "Streamlit"],
     timeframe: "Shipped as an interactive app",
     description:
@@ -96,10 +93,9 @@ export const projects: Project[] = [
     slug: "father-time-lebron",
     title: "Father Time",
     tagline: "NBA aging-curve anomaly detector",
+    summary: "Compares any NBA player's stats to how players have historically aged at that exact age.",
     stat: "1.8σ",
     statLabel: "above baseline, every age 19–40",
-    hoverLine:
-      "LeBron's PER beats the age-based baseline at literally every age from 19 to 40.",
     stack: ["FastAPI", "nba_api", "Basketball-Reference scrape", "pandas"],
     timeframe: "Independent project",
     description:
@@ -115,10 +111,9 @@ export const projects: Project[] = [
     slug: "heat-check",
     title: "Heat Check",
     tagline: "Live NBA win-probability tracking",
+    summary: "Tracks NBA win probability live and flags scoring runs that are statistically out of the ordinary.",
     stat: "12s",
     statLabel: "poll → recompute → flag → push, live",
-    hoverLine:
-      "Built and validated against historical replay — the NBA off-season leaves no live game to test against most of the year.",
     stack: ["FastAPI", "nba_api", "scikit-learn", "Server-Sent Events"],
     timeframe: "Independent project",
     description:
@@ -134,10 +129,9 @@ export const projects: Project[] = [
     slug: "trading-bot",
     title: "Trading Bot",
     tagline: "Binance Futures Testnet (USDT-M)",
+    summary: "Places and manages Binance futures orders from a CLI or a lightweight web dashboard.",
     stat: "3",
     statLabel: "order types, one shared backend",
-    hoverLine:
-      "CLI and web UI share one client/order/validation core — zero duplicated order logic.",
     stack: ["Python", "Binance Futures API (Testnet)", "Flask", "CLI"],
     timeframe: "Independent project",
     description:

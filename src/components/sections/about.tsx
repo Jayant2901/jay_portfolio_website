@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { about, education, leadership, languages, personal } from "@/data/resume";
 
-const EASE = [0.22, 1, 0.36, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 function ProfilePhoto() {
   const [failed, setFailed] = useState(false);
@@ -13,7 +13,7 @@ function ProfilePhoto() {
   if (failed) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-surface to-bg">
-        <span className="font-display text-6xl tracking-tight text-accent/40">
+        <span className="font-display text-6xl text-accent/40">
           {personal.initials}
         </span>
         <span className="px-6 text-center text-xs text-muted">Photo coming soon</span>
@@ -50,27 +50,27 @@ export function About() {
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <div className="mb-14 grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-16">
           <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, ease: EASE }}
+            transition={{ duration: 0.7, ease: EASE }}
             style={{ y: photoY }}
-            className="relative aspect-[4/5] w-full max-w-[280px] overflow-hidden rounded-[20px] border border-border"
+            className="relative aspect-[4/5] w-full max-w-[280px] overflow-hidden rounded-[28px] border border-border shadow-card"
           >
             <ProfilePhoto />
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.7, ease: EASE }}
             className="max-w-2xl"
           >
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
               Who I am
             </p>
-            <h2 className="mb-8 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-fg">
+            <h2 className="mb-8 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">
               About
             </h2>
             <div className="space-y-4">
@@ -88,13 +88,13 @@ export function About() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -32 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="rounded-[20px] border border-border bg-surface p-8"
+            transition={{ duration: 0.7, ease: EASE }}
+            className="rounded-[28px] border border-border bg-surface p-8 shadow-card"
           >
-            <h3 className="mb-6 font-display text-2xl tracking-tight text-fg">Education</h3>
+            <h3 className="mb-6 font-display text-2xl text-fg">Education</h3>
             <div className="flex flex-col gap-6">
               {education.map((item) => (
                 <div key={item.degree} className="border-l-2 border-accent pl-5">
@@ -109,13 +109,13 @@ export function About() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 32 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
-            className="rounded-[20px] border border-border bg-surface p-8"
+            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+            className="rounded-[28px] border border-border bg-surface p-8 shadow-card"
           >
-            <h3 className="mb-6 font-display text-2xl tracking-tight text-fg">Leadership</h3>
+            <h3 className="mb-6 font-display text-2xl text-fg">Leadership</h3>
             <div className="flex flex-col gap-6">
               {leadership.map((item) => (
                 <div key={item.role} className="border-l-2 border-accent pl-5">

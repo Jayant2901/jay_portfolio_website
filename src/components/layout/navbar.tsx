@@ -36,7 +36,7 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
         <AnchorLink
           href="#"
-          className="font-display text-2xl tracking-tight text-fg"
+          className="font-display text-2xl text-fg"
           aria-label={`${personal.name} — back to top`}
         >
           {personal.initials}

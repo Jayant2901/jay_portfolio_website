@@ -1,14 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "@/components/icons/brand-icons";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { projects } from "@/data/resume";
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Projects() {
-  const [hovered, setHovered] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -27,7 +28,7 @@ export function Projects() {
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
             Selected work
           </p>
-          <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-fg">
+          <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">
             Projects
           </h2>
         </motion.div>
@@ -36,10 +37,10 @@ export function Projects() {
           {projects.map((project, i) => (
             <motion.div
               key={project.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -32 : 32 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: EASE }}
               style={{ transformStyle: "preserve-3d" }}
             >
               <TiltCard
@@ -47,11 +48,7 @@ export function Projects() {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => setHovered(project.slug)}
-                onMouseLeave={() => setHovered(null)}
-                onFocus={() => setHovered(project.slug)}
-                onBlur={() => setHovered(null)}
-                className="group relative flex h-80 overflow-hidden rounded-[20px] border border-border bg-surface p-7 transition-colors duration-300 hover:border-accent"
+                className="group relative flex h-[22rem] overflow-hidden rounded-[28px] border border-border bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60"
               >
                 <div
                   aria-hidden="true"
@@ -69,7 +66,7 @@ export function Projects() {
                 </div>
 
                 <div className="flex flex-1 flex-col items-center justify-center text-center">
-                  <span className="font-display text-[clamp(2.2rem,5.5vw,3.2rem)] leading-none tracking-tight text-accent">
+                  <span className="font-display text-[clamp(2.2rem,5.5vw,3.2rem)] leading-none text-accent">
                     {project.stat}
                   </span>
                   <span className="mt-2 max-w-[15rem] text-xs font-medium uppercase tracking-wide text-muted">
@@ -78,29 +75,12 @@ export function Projects() {
                 </div>
 
                 <div>
-                  <h3 className="font-display text-2xl leading-tight tracking-tight text-fg">
+                  <h3 className="font-display text-2xl leading-tight text-fg">
                     {project.title}
                   </h3>
-                  <div className="relative mt-2 h-10">
-                    <p
-                      className={`absolute inset-0 text-sm text-muted transition-all duration-300 ${
-                        hovered === project.slug
-                          ? "-translate-y-1 opacity-0"
-                          : "translate-y-0 opacity-100"
-                      }`}
-                    >
-                      {project.tagline}
-                    </p>
-                    <p
-                      className={`absolute inset-0 text-sm text-fg transition-all duration-300 ${
-                        hovered === project.slug
-                          ? "translate-y-0 opacity-100"
-                          : "translate-y-1 opacity-0"
-                      }`}
-                    >
-                      {project.hoverLine}
-                    </p>
-                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                    {project.summary}
+                  </p>
                 </div>
               </TiltCard>
             </motion.div>
@@ -111,14 +91,14 @@ export function Projects() {
           {projects.map((project, i) => (
             <motion.div
               key={project.slug}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -24 : 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
+              transition={{ duration: 0.6, ease: EASE }}
               className="grid grid-cols-1 gap-6 py-10 sm:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]"
             >
               <div>
-                <h3 className="font-display text-2xl tracking-tight text-fg sm:text-3xl">
+                <h3 className="font-display text-2xl text-fg sm:text-3xl">
                   {project.title}
                 </h3>
                 <p className="mt-2 text-sm text-muted">{project.tagline}</p>

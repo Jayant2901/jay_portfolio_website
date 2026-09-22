@@ -25,8 +25,8 @@ function MarqueeRow({
             key={`${item}-${i}`}
             className={
               outline
-                ? "whitespace-nowrap rounded-full border border-border px-6 py-3 font-display text-2xl tracking-tight text-fg transition-colors duration-200 hover:border-accent hover:text-accent sm:text-3xl"
-                : "whitespace-nowrap rounded-full bg-accent px-6 py-3 font-display text-2xl tracking-tight text-accent-fg sm:text-3xl"
+                ? "whitespace-nowrap rounded-full border border-border px-6 py-3 font-display text-2xl text-fg transition-colors duration-200 hover:border-accent hover:text-accent sm:text-3xl"
+                : "whitespace-nowrap rounded-full bg-accent px-6 py-3 font-display text-2xl text-accent-fg sm:text-3xl"
             }
           >
             {item}
@@ -55,7 +55,7 @@ export function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-14 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] tracking-tight text-fg"
+          className="mb-14 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg"
         >
           Skills &amp; certifications
         </motion.h2>
