@@ -33,58 +33,95 @@ export function Projects() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.slug}
-              initial={{ opacity: 0, x: i % 2 === 0 ? -32 : 32 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: EASE }}
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              <TiltCard
-                as="a"
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex h-[22rem] overflow-hidden rounded-[28px] border border-border bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.32)]"
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-6">
+          {projects.map((project, i) => {
+            const featured = i === 0;
+            return (
+              <motion.div
+                key={project.slug}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -32 : 32 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: EASE }}
+                style={{ transformStyle: "preserve-3d" }}
+                className={featured ? "sm:col-span-4" : "sm:col-span-2"}
               >
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 rounded-full bg-accent/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
-                />
+                <TiltCard
+                  as="a"
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group relative flex overflow-hidden rounded-[28px] border border-border bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.24)] ${
+                    featured
+                      ? "h-[22rem] flex-row items-end p-8"
+                      : "h-[22rem] flex-col justify-between p-7"
+                  }`}
+                >
+                  <div className="pointer-events-none absolute inset-x-7 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                <div className="flex items-start justify-between">
-                  <span className="font-mono-label text-xs font-semibold uppercase text-muted">
-                    0{i + 1}
-                  </span>
-                  <ArrowUpRight
-                    size={22}
-                    className="text-muted transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent"
-                  />
-                </div>
+                  {featured ? (
+                    <>
+                      <div className="flex h-full flex-1 flex-col justify-between">
+                        <div className="flex items-start justify-between">
+                          <span className="font-mono-label text-xs font-semibold uppercase text-muted">
+                            0{i + 1} · {project.tagline}
+                          </span>
+                          <ArrowUpRight
+                            size={22}
+                            className="text-muted transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent"
+                          />
+                        </div>
+                        <div>
+                          <h3 className="font-display text-[clamp(2rem,4vw,3rem)] leading-none text-fg">
+                            {project.title}
+                          </h3>
+                          <p className="mt-3 max-w-md text-muted">{project.summary}</p>
+                        </div>
+                      </div>
+                      <div className="ml-8 hidden shrink-0 border-l border-border pl-8 sm:block">
+                        <span className="font-display block text-[clamp(2.8rem,6vw,4rem)] leading-none text-accent">
+                          {project.stat}
+                        </span>
+                        <span className="font-mono-label mt-2 block max-w-[12rem] text-xs font-medium uppercase text-muted">
+                          {project.statLabel}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between">
+                        <span className="font-mono-label text-xs font-semibold uppercase text-muted">
+                          0{i + 1}
+                        </span>
+                        <ArrowUpRight
+                          size={20}
+                          className="text-muted transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent"
+                        />
+                      </div>
 
-                <div className="flex flex-1 flex-col items-center justify-center text-center">
-                  <span className="font-display text-[clamp(2.2rem,5.5vw,3.2rem)] leading-none text-accent">
-                    {project.stat}
-                  </span>
-                  <span className="font-mono-label mt-2 max-w-[15rem] text-xs font-medium uppercase text-muted">
-                    {project.statLabel}
-                  </span>
-                </div>
+                      <div>
+                        <span className="font-display block text-[clamp(1.8rem,4vw,2.4rem)] leading-none text-accent">
+                          {project.stat}
+                        </span>
+                        <span className="font-mono-label mt-2 block text-xs font-medium uppercase text-muted">
+                          {project.statLabel}
+                        </span>
+                      </div>
 
-                <div>
-                  <h3 className="font-display text-2xl leading-tight text-fg">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
-                    {project.summary}
-                  </p>
-                </div>
-              </TiltCard>
-            </motion.div>
-          ))}
+                      <div>
+                        <h3 className="font-display text-xl leading-tight text-fg">
+                          {project.title}
+                        </h3>
+                        <p className="mt-2 text-sm leading-relaxed text-muted">
+                          {project.summary}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </TiltCard>
+              </motion.div>
+            );
+          })}
         </div>
 
         <div className="mt-20 flex flex-col divide-y divide-border border-t border-border">

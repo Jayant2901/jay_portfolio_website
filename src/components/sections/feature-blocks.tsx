@@ -10,12 +10,14 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const blocks = [
   {
     href: "#projects",
+    index: "01",
     title: "Projects",
     description: "Fraud risk, adaptive RAG, and a regression model that actually explains itself.",
     icon: FolderGit2,
   },
   {
     href: "#about",
+    index: "02",
     title: "About",
     description: "Final-year CS (Data Science) student in Hyderabad, exploring applied ML and LLM tooling.",
     icon: GraduationCap,
@@ -39,31 +41,28 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
         href={block.href}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className="group relative flex h-64 overflow-hidden rounded-[28px] border border-border bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.32)] sm:h-80 sm:p-10"
+        className="group relative flex h-64 overflow-hidden rounded-[28px] border border-border bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 sm:h-72 sm:p-10"
       >
-        <div
+        <span
           aria-hidden="true"
-          className="pointer-events-none absolute -right-12 -top-12 h-56 w-56 rounded-full bg-accent/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80"
-        />
-        <TiltSurface rotateX={rotateX} rotateY={rotateY} className="flex h-full w-full flex-col justify-between">
-          <div className="flex items-start justify-between">
-            <span className="font-mono-label text-xs font-semibold uppercase text-muted">
-              0{index + 1}
+          className="font-display pointer-events-none absolute -bottom-6 -right-2 text-[9rem] leading-none text-fg/[0.04] transition-colors duration-500 group-hover:text-accent/[0.07] sm:text-[11rem]"
+        >
+          {block.index}
+        </span>
+
+        <TiltSurface rotateX={rotateX} rotateY={rotateY} className="relative flex h-full w-full flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-colors duration-300 group-hover:border-accent/60 group-hover:text-accent">
+              <Icon size={17} strokeWidth={1.6} />
             </span>
             <ArrowUpRight
-              size={28}
+              size={22}
               className="text-muted transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent"
             />
           </div>
 
-          <Icon
-            size={72}
-            strokeWidth={1.1}
-            className="self-center text-accent/25 transition-all duration-500 group-hover:scale-110 group-hover:text-accent/50"
-          />
-
           <div>
-            <h3 className="font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-none text-fg transition-colors duration-300 group-hover:text-accent">
+            <h3 className="font-display text-[clamp(2rem,4.5vw,3rem)] leading-none text-fg transition-colors duration-300 group-hover:text-accent">
               {block.title}
             </h3>
             <p className="mt-3 max-w-sm text-muted">{block.description}</p>

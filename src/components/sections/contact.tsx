@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Free, no-backend form delivery — works from a static GitHub Pages export.
-// Create a free access key at https://web3forms.com and set it here (or via
-// NEXT_PUBLIC_WEB3FORMS_KEY) before the form goes live.
+// Optional: a free Web3Forms access key (https://web3forms.com) routes
+// submissions straight to personal.email with no page navigation. Without
+// one, the form falls back to a mailto: link — it still reaches the same
+// inbox (the visitor's own mail client sends it), just with one extra step.
 const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -19,17 +20,32 @@ type Status = "idle" | "sending" | "sent" | "error";
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
 
+  function sendViaMailto(name: string, email: string, message: string) {
+    const subject = `Portfolio contact from ${name}`;
+    const body = `${message}\n\n— ${name} (${email})`;
+    window.location.href = `mailto:${personal.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!WEB3FORMS_ACCESS_KEY) {
-      setStatus("error");
-      return;
-    }
-    setStatus("sending");
     const form = e.currentTarget;
     const data = new FormData(form);
+    const name = String(data.get("name") ?? "");
+    const email = String(data.get("email") ?? "");
+    const message = String(data.get("message") ?? "");
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      sendViaMailto(name, email, message);
+      setStatus("sent");
+      form.reset();
+      return;
+    }
+
+    setStatus("sending");
     data.append("access_key", WEB3FORMS_ACCESS_KEY);
-    data.append("subject", `Portfolio contact from ${data.get("name")}`);
+    data.append("subject", `Portfolio contact from ${name}`);
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -41,10 +57,14 @@ export function Contact() {
         setStatus("sent");
         form.reset();
       } else {
-        setStatus("error");
+        sendViaMailto(name, email, message);
+        setStatus("sent");
+        form.reset();
       }
     } catch {
-      setStatus("error");
+      sendViaMailto(name, email, message);
+      setStatus("sent");
+      form.reset();
     }
   }
 
@@ -118,15 +138,10 @@ export function Contact() {
                 <Send size={16} />
               </Button>
               {status === "sent" && (
-                <p className="text-sm text-accent">Thanks — I&apos;ll get back to you soon.</p>
-              )}
-              {status === "error" && (
-                <p className="text-sm text-muted">
-                  Couldn&apos;t send that — email me directly at{" "}
-                  <a href={socials.email} className="underline decoration-border underline-offset-4 hover:text-accent">
-                    {personal.email}
-                  </a>
-                  .
+                <p className="text-sm text-accent">
+                  {WEB3FORMS_ACCESS_KEY
+                    ? "Thanks — I'll get back to you soon."
+                    : "Opening your mail app — hit send there to reach my inbox."}
                 </p>
               )}
             </div>
