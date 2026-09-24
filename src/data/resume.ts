@@ -45,7 +45,7 @@ export const projects: Project[] = [
     stat: "0",
     statLabel: "LLM calls on the decision path",
     stack: ["XGBoost", "SHAP", "Entity risk memory", "LLM explainer agent"],
-    timeframe: "Built in a 5-day buildathon",
+    timeframe: "Built for the buildathon",
     description:
       "An entity-aware transaction risk system on the IEEE-CIS fraud dataset: an XGBoost model scores each transaction, SHAP explains the top contributing factors, and an LLM agent turns that into a plain-English explanation — with the LLM kept off the decision path entirely.",
     points: [
