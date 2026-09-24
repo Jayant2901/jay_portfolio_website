@@ -9,11 +9,13 @@ import { Button } from "@/components/ui/button";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// Optional: a free Web3Forms access key (https://web3forms.com) routes
-// submissions straight to personal.email with no page navigation. Without
-// one, the form falls back to a mailto: link — it still reaches the same
-// inbox (the visitor's own mail client sends it), just with one extra step.
-const WEB3FORMS_ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+// Web3Forms access key (https://web3forms.com) — routes submissions
+// straight to personal.email with no page navigation. It's meant to be
+// public/client-side (Web3Forms rate-limits and domain-restricts it on
+// their end rather than relying on secrecy), so it's fine to ship in the
+// static build; NEXT_PUBLIC_WEB3FORMS_KEY overrides it if it's ever rotated.
+const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "b05e74f8-a121-472f-b23d-003792f2efe0";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
