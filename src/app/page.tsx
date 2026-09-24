@@ -3,6 +3,7 @@ import { FeatureBlocks } from "@/components/sections/feature-blocks";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
 import { About } from "@/components/sections/about";
+import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/layout/footer";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <Projects />
       <Skills />
       <About />
+      <Contact />
       <Footer />
     </main>
   );

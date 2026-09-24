@@ -68,7 +68,7 @@ export function About() {
             transition={{ duration: 0.7, ease: EASE }}
             className="max-w-2xl"
           >
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
+            <p className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent">
               Who I am
             </p>
             <h2 className="mb-8 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">

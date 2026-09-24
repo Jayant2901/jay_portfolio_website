@@ -9,7 +9,7 @@ export const personal = {
   email: "mejayantsharma130@gmail.com",
   phone: "+91-9390126173",
   tagline:
-    "Final-year CS (Data Science) student building applied ML and LLM-agent projects end to end — from data pipeline through statistical modeling to a deployed app.",
+    "I build models that have to explain themselves — fraud scores with SHAP behind every decision, retrieval pipelines that know when they're guessing. Final-year CS (Data Science), Hyderabad.",
   summary:
     "Final-year B.Tech student in Computer Science and Data Science, building applied ML and LLM-agent projects end to end — from data pipeline through statistical modeling to a deployed app. Comfortable across classical ML (scikit-learn, XGBoost), explainability (SHAP), and LLM tooling.",
   resumeUrl: "/resume.pdf",
@@ -173,8 +173,8 @@ export const education = [
 export const about = {
   paragraphs: [
     "I'm a final-year B.Tech student specializing in Computer Science (Data Science) at Gurunanak Institutions Technical Campus, Hyderabad — expected to graduate in 2027.",
-    "I'm comfortable across classical ML (scikit-learn, XGBoost), explainability (SHAP), and LLM tooling — and I try to keep every model honest about what it can and can't say.",
-    "Outside of that, I'm usually reading about ML research, watching NBA basketball, or listening to music while I work through a dataset.",
+    "Most of what I build sits at the same fault line: a model that's accurate isn't useful if nobody can tell why it made a call. So I spend as much time on SHAP explanations, cost-based thresholds, and confidence calibration as I do on the model itself — classical ML (scikit-learn, XGBoost) and LLM tooling both.",
+    "Outside of that, I'm usually reading about ML research, watching NBA basketball, or listening to music while I work through a dataset — a couple of my side projects (Father Time, Heat Check) are what happens when those two habits collide.",
   ],
 };
 

@@ -114,7 +114,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.9 }}
-        className="relative z-10 mx-auto mb-8 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted"
+        className="font-mono-label relative z-10 mx-auto mb-8 flex items-center gap-2 text-xs font-semibold uppercase text-muted"
       >
         <ChevronDown size={14} className="animate-bounce" />
         {canDrag ? "Scroll — drag to spin" : "Scroll"}

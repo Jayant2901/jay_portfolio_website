@@ -1,83 +1,128 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Icosahedron, MeshDistortMaterial, OrbitControls, Points, PointMaterial } from "@react-three/drei";
+import { Icosahedron, Line, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Generated once at module load (not during any component's render), so the
-// scattering is fixed data rather than a render-time side effect.
-function generateParticlePositions(count: number): Float32Array {
-  const arr = new Float32Array(count * 3);
-  for (let i = 0; i < count; i++) {
-    const r = 3.4 + Math.random() * 1.4;
-    const theta = Math.random() * Math.PI * 2;
-    const phi = Math.acos(2 * Math.random() - 1);
-    arr[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-    arr[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-    arr[i * 3 + 2] = r * Math.cos(phi);
-  }
-  return arr;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const PARTICLE_POSITIONS = generateParticlePositions(400);
+const ACCENT = "#c97b3d";
+const NODE_COUNT = 34;
 
-function Particles() {
-  const ref = useRef<THREE.Points>(null);
+// A small "data graph" — nodes scattered on a sphere shell, connected to
+// their nearest neighbours — reads as analytical rather than decorative,
+// in place of the generic glowing-wireframe-sphere every template uses.
+function generateNodes(count: number, radius: number) {
+  const points: THREE.Vector3[] = [];
+  for (let i = 0; i < count; i++) {
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    points.push(
+      new THREE.Vector3(
+        radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.sin(phi) * Math.sin(theta),
+        radius * Math.cos(phi)
+      )
+    );
+  }
+
+  const edges: [THREE.Vector3, THREE.Vector3][] = [];
+  points.forEach((p, i) => {
+    const distances = points
+      .map((q, j) => ({ j, d: i === j ? Infinity : p.distanceTo(q) }))
+      .sort((a, b) => a.d - b.d)
+      .slice(0, 2);
+    distances.forEach(({ j }) => edges.push([p, points[j]]));
+  });
+
+  return { points, edges };
+}
+
+function DataGraph({ groupRef }: { groupRef: React.RefObject<THREE.Group | null> }) {
+  const { points, edges } = useMemo(() => generateNodes(NODE_COUNT, 2.6), []);
 
   useFrame((_, delta) => {
-    if (ref.current) ref.current.rotation.y += delta * 0.035;
+    if (groupRef.current) groupRef.current.rotation.y += delta * 0.045;
   });
 
   return (
-    <Points ref={ref} positions={PARTICLE_POSITIONS} stride={3} frustumCulled>
-      <PointMaterial
-        transparent
-        color="#c6ff3d"
-        size={0.035}
-        sizeAttenuation
-        depthWrite={false}
-        opacity={0.6}
-      />
-    </Points>
+    <group ref={groupRef}>
+      {edges.map(([a, b], i) => (
+        <Line
+          key={i}
+          points={[a, b]}
+          color={ACCENT}
+          transparent
+          opacity={0.18}
+          lineWidth={1}
+        />
+      ))}
+      {points.map((p, i) => (
+        <mesh key={i} position={p}>
+          <sphereGeometry args={[0.045, 8, 8]} />
+          <meshBasicMaterial color={ACCENT} transparent opacity={0.85} />
+        </mesh>
+      ))}
+    </group>
   );
 }
 
-function DistortedCore() {
-  const meshRef = useRef<THREE.Mesh>(null);
-
+function Core({ meshRef }: { meshRef: React.RefObject<THREE.Mesh | null> }) {
   useFrame((state, delta) => {
     if (!meshRef.current) return;
-    meshRef.current.rotation.y += delta * 0.12;
-    meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.15) * 0.15;
+    meshRef.current.rotation.y -= delta * 0.06;
+    meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.12) * 0.08;
   });
 
   return (
-    <Icosahedron ref={meshRef} args={[1.7, 4]}>
-      <MeshDistortMaterial
-        color="#c6ff3d"
-        wireframe
-        distort={0.35}
-        speed={1.4}
-        emissive="#c6ff3d"
-        emissiveIntensity={0.15}
+    <Icosahedron ref={meshRef} args={[1.05, 1]}>
+      <meshPhysicalMaterial
+        color="#3a352c"
+        roughness={0.3}
+        metalness={0.2}
+        clearcoat={1}
+        clearcoatRoughness={0.15}
+        emissive={ACCENT}
+        emissiveIntensity={0.22}
+        flatShading
       />
     </Icosahedron>
   );
 }
 
-export function HeroScene({ interactive = false }: { interactive?: boolean }) {
+function Scene({ interactive }: { interactive: boolean }) {
+  const graphRef = useRef<THREE.Group>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+  const cameraRig = useRef<THREE.Group>(null);
+
+  useEffect(() => {
+    if (!cameraRig.current) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const ctx = gsap.context(() => {
+      gsap.to(cameraRig.current!.rotation, {
+        y: Math.PI * 0.35,
+        x: -0.15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: "80% top",
+          scrub: 0.6,
+        },
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <Canvas
-      dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 6.2], fov: 45 }}
-      gl={{ alpha: true, antialias: true }}
-      style={{ background: "transparent", touchAction: "pan-y" }}
-    >
-      <ambientLight intensity={0.6} />
-      <pointLight position={[5, 5, 5]} intensity={40} color="#c6ff3d" />
-      <DistortedCore />
-      <Particles />
+    <group ref={cameraRig}>
+      <Core meshRef={coreRef} />
+      <DataGraph groupRef={graphRef} />
       {interactive && (
         <OrbitControls
           enableZoom={false}
@@ -85,10 +130,26 @@ export function HeroScene({ interactive = false }: { interactive?: boolean }) {
           enableDamping
           dampingFactor={0.08}
           autoRotate
-          autoRotateSpeed={0.6}
-          rotateSpeed={0.5}
+          autoRotateSpeed={0.4}
+          rotateSpeed={0.4}
         />
       )}
+    </group>
+  );
+}
+
+export function HeroScene({ interactive = false }: { interactive?: boolean }) {
+  return (
+    <Canvas
+      dpr={[1, 1.75]}
+      camera={{ position: [0, 0, 6.4], fov: 42 }}
+      gl={{ alpha: true, antialias: true }}
+      style={{ background: "transparent", touchAction: "pan-y" }}
+    >
+      <ambientLight intensity={0.5} />
+      <pointLight position={[5, 4, 5]} intensity={30} color={ACCENT} />
+      <pointLight position={[-5, -3, -4]} intensity={12} color="#5b6b7a" />
+      <Scene interactive={interactive} />
     </Canvas>
   );
 }

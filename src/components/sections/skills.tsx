@@ -46,7 +46,7 @@ export function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent"
+          className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent"
         >
           Toolkit
         </motion.p>

@@ -25,7 +25,7 @@ export function Projects() {
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <motion.div style={{ x: headingX }} className="mb-14">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-accent">
+          <p className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent">
             Selected work
           </p>
           <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">
@@ -48,7 +48,7 @@ export function Projects() {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative flex h-[22rem] overflow-hidden rounded-[28px] border border-border bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60"
+                className="group relative flex h-[22rem] overflow-hidden rounded-[28px] border border-border bg-surface p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.32)]"
               >
                 <div
                   aria-hidden="true"
@@ -56,7 +56,7 @@ export function Projects() {
                 />
 
                 <div className="flex items-start justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+                  <span className="font-mono-label text-xs font-semibold uppercase text-muted">
                     0{i + 1}
                   </span>
                   <ArrowUpRight
@@ -69,7 +69,7 @@ export function Projects() {
                   <span className="font-display text-[clamp(2.2rem,5.5vw,3.2rem)] leading-none text-accent">
                     {project.stat}
                   </span>
-                  <span className="mt-2 max-w-[15rem] text-xs font-medium uppercase tracking-wide text-muted">
+                  <span className="font-mono-label mt-2 max-w-[15rem] text-xs font-medium uppercase text-muted">
                     {project.statLabel}
                   </span>
                 </div>

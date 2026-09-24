@@ -39,7 +39,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
         href={block.href}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        className="group relative flex h-64 overflow-hidden rounded-[28px] border border-border bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 sm:h-80 sm:p-10"
+        className="group relative flex h-64 overflow-hidden rounded-[28px] border border-border bg-surface p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.32)] sm:h-80 sm:p-10"
       >
         <div
           aria-hidden="true"
@@ -47,7 +47,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
         />
         <TiltSurface rotateX={rotateX} rotateY={rotateY} className="flex h-full w-full flex-col justify-between">
           <div className="flex items-start justify-between">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+            <span className="font-mono-label text-xs font-semibold uppercase text-muted">
               0{index + 1}
             </span>
             <ArrowUpRight
