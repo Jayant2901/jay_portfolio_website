@@ -39,7 +39,7 @@ function MarqueeRow({
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 border-t border-border py-24 sm:py-32">
+    <section className="border-t border-border py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -48,7 +48,7 @@ export function Skills() {
           transition={{ duration: 0.5 }}
           className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent"
         >
-          Toolkit
+          {"// toolkit"}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

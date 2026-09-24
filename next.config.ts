@@ -7,6 +7,10 @@ const basePath = process.env.GITHUB_PAGES === "true" ? "/jay_portfolio_website" 
 
 const nextConfig: NextConfig = {
   output: "export",
+  // Every route below is a real static page (multi-page site, not one
+  // scroll page), so GitHub Pages needs the /route/index.html convention
+  // to resolve /about, /work, etc. without a 404.
+  trailingSlash: true,
   basePath,
   images: {
     // next/image's optimizer needs a server; static export has none.

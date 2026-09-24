@@ -3,8 +3,9 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { about, education, leadership, languages, personal } from "@/data/resume";
+import { about, certifications, education, leadership, languages, personal } from "@/data/resume";
 import { withBasePath } from "@/lib/base-path";
+import { CornerBadge } from "@/components/ui/corner-badge";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -43,11 +44,7 @@ export function About() {
   const photoY = useTransform(scrollYProgress, [0, 1], [-40, 40]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="scroll-mt-24 border-t border-border py-24 sm:py-32"
-    >
+    <section ref={sectionRef} className="pb-24 pt-8 sm:pb-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <div className="mb-14 grid grid-cols-1 gap-10 md:grid-cols-[minmax(0,280px)_1fr] md:gap-16">
           <motion.div
@@ -69,7 +66,7 @@ export function About() {
             className="max-w-2xl"
           >
             <p className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent">
-              Who I am
+              {"// about"}
             </p>
             <h2 className="mb-8 font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">
               About
@@ -138,6 +135,24 @@ export function About() {
             </div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+          className="mt-5"
+        >
+          <h3 className="mb-6 font-display text-2xl text-fg">Certifications</h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {certifications.map((cert) => (
+              <CornerBadge key={cert.name}>
+                <p className="font-semibold text-fg">{cert.name}</p>
+                <p className="mt-1 text-sm text-muted">{cert.issuer}</p>
+              </CornerBadge>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

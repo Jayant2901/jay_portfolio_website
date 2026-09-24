@@ -2,10 +2,11 @@
 
 import dynamic from "next/dynamic";
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ChevronDown, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AnchorLink } from "@/components/ui/anchor-link";
+import { ScrambleText } from "@/components/ui/scramble-text";
 import { personal, socials } from "@/data/resume";
 import { GithubIcon, LinkedinIcon } from "@/components/icons/brand-icons";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -52,16 +53,15 @@ export function Hero() {
       >
         <h1 className="font-display leading-[0.85] text-fg">
           {["JAYANT", "SHARMA"].map((word, i) => (
-            <span key={word} className="block overflow-hidden">
-              <motion.span
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.1 + i * 0.1, ease: EASE }}
-                className="block text-[clamp(3.2rem,13vw,9rem)]"
-              >
-                {word}
-              </motion.span>
-            </span>
+            <motion.span
+              key={word}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: 0.1 + i * 0.15 }}
+              className="block text-[clamp(3.2rem,13vw,9rem)]"
+            >
+              <ScrambleText text={word} delay={100 + i * 250} />
+            </motion.span>
           ))}
         </h1>
 
@@ -81,7 +81,7 @@ export function Hero() {
           className="pointer-events-auto mt-10 flex flex-wrap items-center gap-3.5"
         >
           <Button asChild variant="primary">
-            <AnchorLink href="#projects">View my work</AnchorLink>
+            <Link href="/work">View my work</Link>
           </Button>
           <Button asChild variant="ghost">
             <a href={withBasePath(personal.resumeUrl)} download>

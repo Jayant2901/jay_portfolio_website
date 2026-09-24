@@ -71,7 +71,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="scroll-mt-24 border-t border-border py-24 sm:py-32">
+    <section className="pb-24 pt-8 sm:pb-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -80,7 +80,7 @@ export function Contact() {
           transition={{ duration: 0.5 }}
           className="font-mono-label mb-4 text-xs font-semibold uppercase text-accent"
         >
-          Get in touch
+          {"// contact"}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, x: -40 }}

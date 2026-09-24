@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
+import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { PageTransition } from "@/components/layout/page-transition";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { personal } from "@/data/resume";
 import { withBasePath } from "@/lib/base-path";
@@ -70,7 +72,8 @@ export default function RootLayout({
           <ScrollProgress />
           <SmoothScrollProvider>
             <Navbar />
-            {children}
+            <PageTransition>{children}</PageTransition>
+            <Footer />
           </SmoothScrollProvider>
         </MotionConfig>
       </body>

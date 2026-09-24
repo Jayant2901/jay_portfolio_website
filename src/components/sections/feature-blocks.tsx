@@ -1,22 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { ArrowUpRight, FolderGit2, GraduationCap } from "lucide-react";
-import { AnchorLink } from "@/components/ui/anchor-link";
 import { useTilt, TiltSurface } from "@/components/ui/tilt-card";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const blocks = [
   {
-    href: "#projects",
+    href: "/work",
     index: "01",
     title: "Projects",
     description: "Fraud risk, adaptive RAG, and a regression model that actually explains itself.",
     icon: FolderGit2,
   },
   {
-    href: "#about",
+    href: "/about",
     index: "02",
     title: "About",
     description: "Final-year CS (Data Science) student in Hyderabad, exploring applied ML and LLM tooling.",
@@ -36,7 +36,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
       transition={{ duration: 0.7, delay: index * 0.08, ease: EASE }}
       style={{ transformStyle: "preserve-3d" }}
     >
-      <AnchorLink
+      <Link
         ref={ref}
         href={block.href}
         onMouseMove={onMouseMove}
@@ -68,7 +68,7 @@ function FeatureTile({ block, index }: { block: (typeof blocks)[number]; index: 
             <p className="mt-3 max-w-sm text-muted">{block.description}</p>
           </div>
         </TiltSurface>
-      </AnchorLink>
+      </Link>
     </motion.div>
   );
 }

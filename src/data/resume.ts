@@ -31,6 +31,8 @@ export type Project = {
   statLabel: string;
   stack: string[];
   timeframe: string;
+  role: string;
+  challenge: string;
   description: string;
   points: string[];
   githubUrl: string;
@@ -46,6 +48,9 @@ export const projects: Project[] = [
     statLabel: "LLM calls on the decision path",
     stack: ["XGBoost", "SHAP", "Entity risk memory", "LLM explainer agent"],
     timeframe: "Built for the buildathon",
+    role: "Solo build — Razorpay Internship Buildathon, Track 2",
+    challenge:
+      "A fraud model that only outputs a risk score isn't enough to act on — reviewers need to know why a transaction was flagged, repeat offenders need to be tracked over time, and a fixed threshold can't account for how differently a false positive and a missed fraud case actually cost.",
     description:
       "An entity-aware transaction risk system on the IEEE-CIS fraud dataset: an XGBoost model scores each transaction, SHAP explains the top contributing factors, and an LLM agent turns that into a plain-English explanation — with the LLM kept off the decision path entirely.",
     points: [
@@ -64,6 +69,9 @@ export const projects: Project[] = [
     statLabel: "less retrieval, higher accuracy (p=0.004)",
     stack: ["Groq LLM API", "FAISS retrieval", "Bootstrap CI + significance tests"],
     timeframe: "Independent research project",
+    role: "Independent research project",
+    challenge:
+      "Always retrieving context for a RAG pipeline is expensive and often unnecessary — if a model already knows the answer, running retrieval anyway just adds latency and cost. The open question was whether a model's own confidence is a reliable enough signal to skip retrieval safely.",
     description:
       "Tests whether a model's self-reported confidence can gate retrieval — skip it when the model already knows the answer — benchmarked against no-RAG/always-RAG baselines on two datasets, with bootstrap confidence intervals and paired significance tests throughout.",
     points: [
@@ -82,6 +90,9 @@ export const projects: Project[] = [
     statLabel: "R² on held-out WHO data",
     stack: ["scikit-learn", "Streamlit"],
     timeframe: "Shipped as an interactive app",
+    role: "Independent project",
+    challenge:
+      "Life expectancy depends on dozens of interacting health, education, and economic indicators — a model needs to capture those non-linear relationships accurately, and be simple enough to ship as something people can actually open and use rather than a notebook.",
     description:
       "Trained a Random Forest Regressor on WHO life-expectancy data (adult mortality, GDP, schooling, immunization) reaching R² = 0.968 and MAE = 1.08 years on held-out data, and shipped it as an interactive Streamlit app.",
     points: [
@@ -98,6 +109,9 @@ export const projects: Project[] = [
     statLabel: "above baseline, every age 19–40",
     stack: ["FastAPI", "nba_api", "Basketball-Reference scrape", "pandas"],
     timeframe: "Independent project",
+    role: "Independent project",
+    challenge:
+      "Comparing players across NBA eras honestly is hard — raw stats don't account for how the game itself has changed, and most \"aging curve\" claims are eyeballed rather than measured against real historical data at each exact age.",
     description:
       "Builds real NBA aging curves from every qualifying player-season since 1949–50, then measures how many standard deviations any player's performance sits above or below the historical norm at their exact age — LeBron James as the flagship example.",
     points: [
@@ -116,6 +130,9 @@ export const projects: Project[] = [
     statLabel: "poll → recompute → flag → push, live",
     stack: ["FastAPI", "nba_api", "scikit-learn", "Server-Sent Events"],
     timeframe: "Independent project",
+    role: "Independent project",
+    challenge:
+      "Broadcasters call almost every scoring run \"hot,\" but few of those runs are actually statistically unusual. Flagging the real ones requires a live, recomputed baseline instead of a gut call — and it has to run in real time while a game is actually being played.",
     description:
       "A real-time win-probability model recomputed every ~12 seconds as a live game is polled, paired with anomaly detection that z-scores each scoring run against a historical baseline instead of just flagging any run as \"hot.\"",
     points: [
@@ -134,6 +151,9 @@ export const projects: Project[] = [
     statLabel: "order types, one shared backend",
     stack: ["Python", "Binance Futures API (Testnet)", "Flask", "CLI"],
     timeframe: "Independent project",
+    role: "Independent project",
+    challenge:
+      "A CLI and a web UI for placing orders often end up as two separate, duplicated implementations that quietly drift apart. The goal was one shared backend both interfaces call identically, with clear diagnostics when API auth or permissions fail instead of a silent 400.",
     description:
       "A CLI and a lightweight Flask web UI for placing MARKET, LIMIT, and STOP orders on Binance's USDT-M Futures Testnet, both built on the same signed-request client, order-placement, and validation modules.",
     points: [
@@ -194,8 +214,11 @@ export const skillsRowTwo = [
   "SQL",
   "LLM / Prompt Engineering",
   "Git / GitHub",
-  "IBM Data Science Professional Certificate",
-  "Data Science for Engineers (NPTEL / IIT)",
+];
+
+export const certifications = [
+  { name: "IBM Data Science Professional Certificate", issuer: "IBM · Coursera" },
+  { name: "Data Science for Engineers", issuer: "NPTEL · IIT Madras" },
 ];
 
 export const languages = [

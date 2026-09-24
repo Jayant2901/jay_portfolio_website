@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, type MouseEvent, type ReactNode, type RefObject } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
 
 // Shared tilt physics for cases where the hoverable/clickable element is owned
@@ -56,7 +57,7 @@ export function TiltSurface({
 type TiltCardProps = {
   children: ReactNode;
   className?: string;
-  as?: "div" | "a";
+  as?: "div" | "a" | "link";
   href?: string;
   target?: string;
   rel?: string;
@@ -69,6 +70,8 @@ type TiltCardProps = {
 // The outer element owns hit-testing (hover state, href, focus) and never moves,
 // so it can't desync from the mouse. Only the inner wrapper tilts in 3D — that way
 // the spring lag on the tilt can never cause a spurious mouseleave on the outer box.
+// as="a" is a plain external anchor; as="link" goes through next/link so basePath
+// (the GitHub Pages /jay_portfolio_website prefix) and client-side transitions work.
 export function TiltCard({ children, className, as = "div", ...rest }: TiltCardProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<HTMLAnchorElement>(null);
@@ -80,7 +83,7 @@ export function TiltCard({ children, className, as = "div", ...rest }: TiltCardP
   const rotateY = useTransform(springX, [0, 1], [-6, 6]);
 
   function handleMouseMove(e: MouseEvent<HTMLDivElement | HTMLAnchorElement>) {
-    const el = as === "a" ? anchorRef.current : divRef.current;
+    const el = as === "div" ? divRef.current : anchorRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     x.set((e.clientX - rect.left) / rect.width);
@@ -100,6 +103,22 @@ export function TiltCard({ children, className, as = "div", ...rest }: TiltCardP
       {children}
     </motion.div>
   );
+
+  if (as === "link") {
+    const { href, ...linkRest } = rest as TiltCardProps & { href: string };
+    return (
+      <Link
+        ref={anchorRef}
+        href={href}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={className}
+        {...linkRest}
+      >
+        {inner}
+      </Link>
+    );
+  }
 
   if (as === "a") {
     return (

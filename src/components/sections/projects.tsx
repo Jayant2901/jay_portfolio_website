@@ -1,10 +1,12 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "@/components/icons/brand-icons";
 import { TiltCard } from "@/components/ui/tilt-card";
+import { CountUp } from "@/components/ui/count-up";
 import { projects } from "@/data/resume";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -18,19 +20,19 @@ export function Projects() {
   const headingX = useTransform(scrollYProgress, [0, 1], [-40, 0]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="projects"
-      className="scroll-mt-24 border-t border-border py-24 sm:py-32"
-    >
+    <section ref={sectionRef} className="pb-24 pt-8 sm:pb-32">
       <div className="mx-auto max-w-7xl px-6 sm:px-10">
         <motion.div style={{ x: headingX }} className="mb-14">
           <p className="font-mono-label mb-3 text-xs font-semibold uppercase text-accent">
-            Selected work
+            {"// work"}
           </p>
           <h2 className="font-display text-[clamp(2.4rem,6vw,4.5rem)] leading-[0.95] text-fg">
-            Projects
+            Selected projects
           </h2>
+          <p className="mt-4 max-w-xl text-muted">
+            Each one opens into a full case study — the problem, the approach, and the
+            verified result.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-6">
@@ -47,10 +49,8 @@ export function Projects() {
                 className={featured ? "sm:col-span-4" : "sm:col-span-2"}
               >
                 <TiltCard
-                  as="a"
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  as="link"
+                  href={`/projects/${project.slug}`}
                   className={`group relative flex overflow-hidden rounded-[28px] border border-border bg-surface shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_36px_64px_-24px_rgba(201,123,61,0.24)] ${
                     featured
                       ? "h-[22rem] flex-row items-end p-8"
@@ -79,9 +79,10 @@ export function Projects() {
                         </div>
                       </div>
                       <div className="ml-8 hidden shrink-0 border-l border-border pl-8 sm:block">
-                        <span className="font-display block text-[clamp(2.8rem,6vw,4rem)] leading-none text-accent">
-                          {project.stat}
-                        </span>
+                        <CountUp
+                          stat={project.stat}
+                          className="font-display block text-[clamp(2.8rem,6vw,4rem)] leading-none text-accent"
+                        />
                         <span className="font-mono-label mt-2 block max-w-[12rem] text-xs font-medium uppercase text-muted">
                           {project.statLabel}
                         </span>
@@ -100,9 +101,10 @@ export function Projects() {
                       </div>
 
                       <div>
-                        <span className="font-display block text-[clamp(1.8rem,4vw,2.4rem)] leading-none text-accent">
-                          {project.stat}
-                        </span>
+                        <CountUp
+                          stat={project.stat}
+                          className="font-display block text-[clamp(1.8rem,4vw,2.4rem)] leading-none text-accent"
+                        />
                         <span className="font-mono-label mt-2 block text-xs font-medium uppercase text-muted">
                           {project.statLabel}
                         </span>
@@ -140,15 +142,23 @@ export function Projects() {
                 </h3>
                 <p className="mt-2 text-sm text-muted">{project.tagline}</p>
                 <p className="mt-1 text-sm text-muted">{project.timeframe}</p>
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-fg underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
-                >
-                  <GithubIcon size={16} />
-                  View on GitHub
-                </a>
+                <div className="mt-5 flex flex-wrap items-center gap-5">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-fg underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+                  >
+                    Read the case study
+                  </Link>
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-fg underline decoration-border underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+                  >
+                    <GithubIcon size={16} />
+                    View on GitHub
+                  </a>
+                </div>
               </div>
               <div>
                 <ul className="flex flex-col gap-3">
